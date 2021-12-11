@@ -23,13 +23,13 @@ pub struct MemoryMapTag {
 
 impl MemoryMapTag {
     /// Return an iterator over all AVAILABLE marked memory areas.
-    pub fn memory_areas(&self) -> impl Iterator<Item = &MemoryArea> {
+    pub fn memory_areas(&self) -> impl Iterator<Item = &MemoryArea> + Clone {
         self.all_memory_areas()
             .filter(|entry| matches!(entry.typ, MemoryAreaType::Available))
     }
 
     /// Return an iterator over all marked memory areas.
-    pub fn all_memory_areas(&self) -> impl Iterator<Item = &MemoryArea> {
+    pub fn all_memory_areas(&self) -> impl Iterator<Item = &MemoryArea> + Clone {
         let self_ptr = self as *const MemoryMapTag;
         let start_area = (&self.first_area) as *const MemoryArea;
         MemoryAreaIter {
